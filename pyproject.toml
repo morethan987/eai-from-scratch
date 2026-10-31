@@ -1,7 +1,7 @@
 [project]
-name = "vla-from-scratch"
+name = "eai-from-scratch"
 version = "0.1.0"
-description = "Add your description here"
+description = "Foundations, Architectures, Scaling, and Systems for Generalist Robot Policies"
 readme = "README.md"
 authors = [
     { name = "morethan987", email = "2404385626@qq.com" }
@@ -22,13 +22,9 @@ dependencies = [
     "tyro>=1.0.16",
 ]
 
-[project.scripts]
-vla-from-scratch = "vla_from_scratch:main"
-
 [build-system]
 requires = ["uv_build>=0.13.6,<0.14.0"]
 build-backend = "uv_build"
-
 
 [[tool.uv.index]]
 url = "https://mirrors.aliyun.com/pypi/simple/"

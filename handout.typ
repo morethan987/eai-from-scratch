@@ -17,7 +17,7 @@
   toc: true,
   font: "Libertinus Serif",
   code-font: "DejaVu Sans Mono",
-  margin: (x: 40pt, top: 50pt, bottom: 40pt)
+  margin: (x: 40pt, top: 50pt, bottom: 50pt)
 )
 
 #pagebreak()
