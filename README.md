@@ -1,10 +1,16 @@
-# Course Syllabus: Embodied AI from Scratch (EAI-336)
+# Embodied AI from Scratch (EAI-336)
 
 **Foundations, Architectures, Scaling, and Systems for Generalist Robot Policies**
 
-The "course" is inspired by [Stanford CS 336](https://cs336.stanford.edu/) cource which has 5 high-quality experiment handouts.
+The "course" is inspired by [Stanford CS 336](https://cs336.stanford.edu/) *Language Modeling from Scratch* course. It's such a high-quality course that you can build proper intuition, learn fresh and solid techniques, (the course content comes from recent papers which are **verified on large-scale models**), be aware of the low-level details and even learn how to check the PyTorch documents and write your python code.
 
-## The Core Pipeline
+ Someone may argue that it's no longer important to know the details in this AI era and the only thing you need to do is lead a group of AI to tackle any problem you want. But my personal experience does not support that: you should always be aware of your goal and strictly review the output from AI. Otherwise you may find yourself in a huge hallucination made by AI and can hardly tell what the AIs are doing as well as what you are doing. Just as a popular comment goes:
+
+> You cannot outsource your brain if you do not actually have one.
+
+Be aware of the details and accumulate it over time is your most significant advantage as a human being.
+
+## Syllabus
 
 ```mermaid
 flowchart LR
@@ -61,9 +67,17 @@ Theoretical Foundations:
 
 - Imitation Learning as Distribution Matching: Behavior Cloning (BC) under deterministic regression vs. the mode-collapse failure mode in multimodal action trajectories.
 - Denoising Diffusion Probabilistic Models (DDPM/DDIM): Forward noise schedules, Gaussian transition kernels, and residual noise estimation loss:
-  $$\mathcal{L}_{\text{Diffusion}} = \mathbb{E}_{t, x_0, \epsilon} \left[ \|\epsilon - \epsilon_\theta(x_t, t, c)\|^2 \right]$$
+
+$$
+\mathcal{L}_{\text{Diffusion}} = \mathbb{E}_{t, x_0, \epsilon} \left[ \|\epsilon - \epsilon_\theta(x_t, t, c)\|^2 \right]
+$$
+
 - Optimal Transport Conditional Flow Matching (OT-CFM): Probability paths, conditional vector fields $u_t(x_1 | x_0) = x_1 - x_0$, and regression on the flow field:
-  $$\mathcal{L}_{\text{CFM}} = \mathbb{E}_{t, x_0, x_1} \left[ \|v_\theta(x_t, t, c) - (x_1 - x_0)\|^2 \right]$$
+
+$$
+\mathcal{L}_{\text{CFM}} = \mathbb{E}_{t, x_0, x_1} \left[ \|v_\theta(x_t, t, c) - (x_1 - x_0)\|^2 \right]
+$$
+
 - Optimization Dynamics: AdamW, Cosine learning-rate decay with warmup, gradient clipping, and the crucial role of Exponential Moving Average (EMA) on policy weights.
 
 From-Scratch Implementation:
@@ -95,7 +109,11 @@ Theoretical Foundations:
 
 - FLOPs Accounting in Robotics: Deriving exact FLOP formulations incorporating visual patch count ($H \times W / P^2$), history horizon, causal backbone layers, and diffusion/flow denoising integration steps ($N_{\text{ODE}}$).
 - IsoFLOPs Profiles: Fitting empirical power laws to offline validation loss:
-  $$L(N, D) = E + \frac{A}{N^\alpha} + \frac{B}{D^\beta}$$
+
+$$
+L(N, D) = E + \frac{A}{N^\alpha} + \frac{B}{D^\beta}
+$$
+
   where $N$ is parameter count and $D$ is demonstration hours.
 - Hyperparameter Transfer ($\mu$P): Zero-shot transfer of optimal learning rates and initialization scales from sub-100M parameter toy models to multi-billion parameter VLAs.
 - The "Loss-to-Success Gap": Analytical exploration of why lower offline validation loss does not always guarantee a higher physical rollout success rate.
@@ -113,7 +131,11 @@ Theoretical Foundations:
 
 - Asynchronous Control Architectures: Resolving the frequency mismatch between low-frequency foundation model inference (5–10 Hz) and high-frequency joint servo loops (50–100 Hz) using non-blocking queues.
 - Action Chunking & Temporal Ensembling: Receding horizon execution; eliminating motion jerk via exponential moving average smoothing across overlapping trajectory predictions:
-  $$a_t = \sum_{i=1}^k w_i \cdot \hat{a}_{t|t-i}$$
+
+$$
+a_t = \sum_{i=1}^k w_i \cdot \hat{a}_{t|t-i}
+$$
+
 - Ultra-Fast Solvers & Latency Compensation: Evaluating the Pareto frontier between ODE sampling steps (1-step vs. 4-step Euler) and end-to-end control latency.
 - Edge Deployment: KV-cache state preservation, weight quantization (FP8 / INT4), and memory-bandwidth management for onboard GPUs (e.g., Jetson Orin).
 
@@ -131,7 +153,11 @@ Theoretical Foundations:
 - Covariate Shift & Compounding Errors: Theoretical analysis of why $O(\epsilon T^2)$ error cascades occur when Behavior Cloning encounters out-of-distribution (OOD) states.
 - Interactive Imitation & Intervention (Human-in-the-Loop): DAgger and HG-DAgger algorithms; intervention-based fine-tuning using human corrective control.
 - Trajectory-Level Preference Alignment (Action-DPO): Adapting Direct Preference Optimization to continuous action spaces using autonomous rollouts:
-  $$\mathcal{L}_{\text{Action-DPO}} = -\log \sigma \left( \beta \log \frac{\pi_\theta(y_w | x)}{\pi_{\text{ref}}(y_w | x)} - \beta \log \frac{\pi_\theta(y_l | x)}{\pi_{\text{ref}}(y_l | x)} \right)$$
+
+$$
+\mathcal{L}_{\text{Action-DPO}} = -\log \sigma \left( \beta \log \frac{\pi_\theta(y_w | x)}{\pi_{\text{ref}}(y_w | x)} - \beta \log \frac{\pi_\theta(y_l | x)}{\pi_{\text{ref}}(y_l | x)} \right)
+$$
+
   where $y_w$ is a successful trajectory chunk and $y_l$ is a failed attempt.
 - Massively Parallel Online RL: Bootstrapping from an offline policy and fine-tuning via PPO or SAC in high-throughput GPU environments (IsaacLab, ManiSkill).
 
@@ -139,3 +165,38 @@ From-Scratch Implementation:
 
 - An automated failure-recovery pipeline injecting force disturbances into the robot, collecting recovery rollouts, and fine-tuning the policy via Action-DPO or DAgger.
 - Deliverable: A competitive policy evaluated on a hidden suite of randomized perturbation tests, demonstrating autonomous self-correction upon task failure.
+
+## Project Questions
+
+### Why the Tinymist LSP reports references errors in chapter files?
+
+You need to set `tinymist` to use the lock file.
+
+For Zed users you can merge the configs into your `settings.json` file:
+
+```json
+"languages": {
+  "Typst": {
+    "language_servers": ["tinymist"],
+  },
+},
+"lsp": {
+  "tinymist": {
+    "settings": { "projectResolution": "lockDatabase" },
+  },
+},
+```
+
+For Helix user, you can copy and paste into you `languages.toml` file:
+
+```toml
+[[language]]
+name = "typst"
+language-servers = ["tinymist"]
+
+[language-server.tinymist]
+command = "tinymist"
+
+[language-server.tinymist.config]
+projectResolution = "lockDatabase"
+```

@@ -1,41 +1,24 @@
 #import "@preview/quill-assignment:0.1.0": *
 
-#show: assignment.with(
-  title: "Vison Language Action Model\nfrom scratch",
-  subtitle: "Theoretical Analysis and Empirical Benchmarking",
-  course: "VLA tutorial for beginners",
-  assignment: "Assignment 1",
-  student: "Morethan",
-  student-id: "2026-123456",
-  instructor: "Dr. Mystery",
-  department: "Department of Bed No.1",
-  university: "Dormitory University",
-  date: datetime.today(),
-  theme: "nord-light",
-  cover-page: true,
-  cover-style: "geometric",
-  toc: true,
-  font: "Libertinus Serif",
-  code-font: "DejaVu Sans Mono",
-  margin: (x: 40pt, top: 50pt, bottom: 50pt)
-)
+= Embodied Scaling Laws
 
-#pagebreak()
+Here is normal content.
 
-= Problem 1
+#lorem(500)
+
+Answer or notes here. This is an inline formular $E=m c^2$. In Typst, the only warpper for formulas is the *signle* dollar sign.
 
 #question(title: "Multi-Layer Perceptron")[
   Derive the parameter update rule for the weight matrix using the chain rule.
 ]
 
+Answer or notes here.
+
 #answer[
   The gradient with respect to the weight matrix is
 
   $
-  (partial L)/(partial W^((l)))
-  =
-  delta^((l))
-  (a^((l-1)))^T
+  (partial L)/(partial W^((l))) = delta^((l)) (a^((l-1)))^T
   $
 
   #note(type: "tip")[
@@ -61,7 +44,3 @@
   A thorough treatment of the surrounding building blocks (embeddings,
   layer normalization, optimization) can be found in @goodfellow2016dl.
 ]
-
-= References
-
-#bibliography("refs.bib", title: none, style: "ieee")
