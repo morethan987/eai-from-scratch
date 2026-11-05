@@ -17,6 +17,12 @@ def run_cmd(cmd: list[str], hint: str = "") -> str:
         print(f"[ERROR] Fail to run: {' '.join(cmd)}\n{e.stderr.strip()}")
         if hint:
             print(f"[INFO] {hint}")
+        if e.stdout.strip():
+            print(f"[STDOUT]\n{e.stdout.strip()}")
+        if e.stderr.strip():
+            print(f"[STDERR]\n{e.stderr.strip()}")
+        if hint:
+            print(f"[INFO] {hint}")
         sys.exit(1)
 
 
@@ -52,15 +58,18 @@ def main():
             file.unlink()
 
     run_cmd(["git", "add", "src/"])
-    run_cmd(
-        [
-            "git",
-            "commit",
-            "-m",
-            "chore: release student blank-slate template",
-            "--no-verify",
-        ]
-    )
+    if run_cmd(["git", "status", "--porcelain"]):
+        run_cmd(
+            [
+                "git",
+                "commit",
+                "-m",
+                "chore: release student blank-slate template",
+                "--no-verify",
+            ]
+        )
+    else:
+        print("[WARN] Nothing to commit — src/eai336 already blank on main?")
 
     run_cmd(["git", "checkout", "main"])
 
