@@ -1,7 +1,7 @@
 [project]
 name = "eai-from-scratch"
 version = "0.1.0"
-description = "Foundations, Architectures, Scaling, and Systems for Generalist Robot Policies"
+description = "Embodied AI from Scratch (EAI-336): Foundations, Architectures, Scaling, and Systems for Generalist Robot Policies"
 readme = "README.md"
 authors = [
     { name = "morethan987", email = "2404385626@qq.com" }
@@ -22,13 +22,40 @@ dependencies = [
     "tyro>=1.0.16",
 ]
 
+[dependency-groups]
+dev = [
+    "prek>=0.5.10",
+    "pytest>=9.2.0",
+    "pytest-xdist>=3.8.0",
+    "ruff>=0.17.3",
+    "ty>=0.0.97",
+]
+
 [build-system]
-requires = ["uv_build>=0.13.6,<0.14.0"]
-build-backend = "uv_build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/eai336"]
 
 [[tool.uv.index]]
 url = "https://mirrors.aliyun.com/pypi/simple/"
 default = true
 
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-rfEs --tb=short"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+
 [tool.ty.rules]
 invalid-mutable-override = "ignore"
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+src = ["src", "tests", "scripts"]
