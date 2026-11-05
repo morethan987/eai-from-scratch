@@ -1,0 +1,3 @@
+[env]
+CUDA_VISIBLE_DEVICES = "0,2"
+MUJOCO_GL = "egl"
