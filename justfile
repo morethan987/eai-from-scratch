@@ -54,7 +54,12 @@ doc-watch:
 
 # One-click convert the current main branch and push to the student blank branch
 release-student:
-    @echo "About to clear implementation code and generate the student blank branch..."
+    @echo "About to clear implementation code, generate the student blank branch and push to remote"
     uv run scripts/release_student.py
-    @echo "🚀 Pushing to remote student branch..."
-    git push origin student --force
+    @echo "✨ Success!"
+
+# One-click convert the current main branch without pushing
+release-student-no-push:
+    @echo "About to clear implementation code, generate the student blank branch and push to remote"
+    uv run scripts/release_student.py --no-push
+    @echo "✨ Success!"
